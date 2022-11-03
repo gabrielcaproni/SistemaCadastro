@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="C:\Users\12303449693\Desktop\Linguagem_de_Programacao_I\Projeto Sistemas Matheus\Visual Studio\Projeto de Cadastro Bandas\ConectaBanco.cs" Link="ConectaBanco.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="MySql.Data" Version="8.0.31" />
   </ItemGroup>
 

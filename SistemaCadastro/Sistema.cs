@@ -48,15 +48,14 @@ namespace SistemaCadastro
 
         private void Sistema_Load(object sender, EventArgs e)
         {
-            ConectaBanco con = new ConectaBanco(); // Instancia o ConectaBanco 
-            DataTable tabelaDados = new DataTable(); // Isatancia uma tabela virtual, que vai recebr a tabrla virtul de outra função
-            tabelaDados = con.listaGeneros(); 
-            cbGenero.DataSource = tabelaDados; // Especifica a fonte de dados 
-            cbGenero.DisplayMember = "genero"; // Texto que sera mostrado
-            cbGenero.ValueMember = "idgenero"; // Qual valor que será guardado quando selecionado
-            lbmMsgErro.Text = con.mensagem;
-
-
+            ConectaBanco con = new ConectaBanco();
+            DataTable tabelaDados = new DataTable();
+            tabelaDados = con.listaGeneros();
+            cbGenero.DataSource = tabelaDados;
+            cbGenero.DisplayMember = "genero";
+            cbGenero.ValueMember = "idgenero";
+            lblmsgerro.Text = con.mensagem;
+            cbGenero.Text = "";
         }
 
 
@@ -90,11 +89,6 @@ namespace SistemaCadastro
         private void bntAddGenero_Click(object sender, EventArgs e)
         {
           
-        }
-
-        private void label11_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
