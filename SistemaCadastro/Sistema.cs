@@ -13,6 +13,7 @@ namespace SistemaCadastro
 {
     public partial class Sistema : Form
     {
+        int idAlterar;// variavel global
 
         public Sistema()
         {
@@ -46,12 +47,17 @@ namespace SistemaCadastro
 
         private void listaGenero()
         {
-            ConectaBanco con = new ConectaBanco();
-            DataTable tabelaDados = new DataTable();
+            ConectaBanco con = new ConectaBanco();//instancia o conectaBanco
+            DataTable tabelaDados = new DataTable();//instancia uma tabela virtual, que vai receber a tabela virtual de outra funcao  
             tabelaDados = con.listaGeneros();
-            cbGenero.DataSource = tabelaDados;
-            cbGenero.DisplayMember = "genero";
-            cbGenero.ValueMember = "idgenero";
+            cbGenero.DataSource = tabelaDados;//especifica a fonte de dados 
+            cbGenero.DisplayMember = "genero";//texto que sera mostrado
+            cbGenero.ValueMember = "idgenero";//qual valor que sera guardado quando selecionado 
+            //preenchendo cbAlteraGenero 
+            cbAlteraGenero.DataSource = tabelaDados;
+            cbAlteraGenero.DisplayMember = "genero";
+            cbAlteraGenero.ValueMember = "idgenero";
+            //
             lblmsgerro.Text = con.mensagem;
             cbGenero.Text = "";
         }
@@ -131,19 +137,44 @@ namespace SistemaCadastro
 
         private void btnAlterar_Click(object sender, EventArgs e)
         {
-            
+            int linha = dgBandas.CurrentRow.Index; // pega linha selecionada 
+            idAlterar = Convert.ToInt32(dgBandas.Rows[linha].Cells["idBandas"].Value.ToString());
+            txtAlteraNome.Text = dgBandas.Rows[linha].Cells["nome"].Value.ToString();
+            txtAlteraIntegrantes.Text = dgBandas.Rows[linha].Cells["integrantes"].Value.ToString();
+            txtAlteraRanking.Text = dgBandas.Rows[linha].Cells["ranking"].Value.ToString();
+            cbAlteraGenero.Text = dgBandas.Rows[linha].Cells["genero"].Value.ToString();
+
+            tabControl1.SelectedTab = tabAlterar;//muda aba
         }
 
-         private void btnConfirmaAlteracao_Click(object sender, EventArgs e)
-        {
-            
 
-
-        }
 
         private void bntAddGenero_Click(object sender, EventArgs e)
         {
           
+        }
+
+        private void btnConfirmaAlteracao_Click_1(object sender, EventArgs e)
+        {
+           Banda b = new Banda();
+            b.Nome = txtAlteraNome.Text;
+            b.Ranking = Convert.ToInt32(txtAlteraRanking.Text);
+            b.Integrantes = Convert.ToInt32(txtAlteraIntegrantes.Text);
+            b.Genero = Convert.ToInt32(cbAlteraGenero.SelectedValue.ToString());
+            ConectaBanco conecta = new ConectaBanco();
+            bool retorno = conecta.alteraBanda(b, idAlterar);
+            if (retorno==true)
+            {
+                MessageBox.Show("Dados alterados com sucesso");
+            }
+            else
+            {
+                lblmsgerro.Text = conecta.mensagem;
+            }
+            listaBanda();
+
+          //  MessageBox.Show("Dados alterados com sucesso");
+
         }
     }
 }
